@@ -1,0 +1,38 @@
+<form (submit)="save()" #form="ngForm">
+    
+    <div class="grid">
+
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" required
+               [(ngModel)]="registro.nome">
+
+        <label for="registroConselho">Registro</label>
+        <input type="text" name="registroConselho" id="registroConselho" required
+               [(ngModel)]="registro.registroConselho">
+
+        <label for="especialidade">Especialidade</label>
+        <select name="especialidade" id="especialidade" required
+                [(ngModel)]="registro.especialidade_id">
+            <option *ngFor="let e of especialidades" [ngValue]="e.id">{{e.nome}}</option>
+        </select>
+
+        <label for="unidade">Unidade</label>
+        <select name="unidade" id="unidade" required
+                [(ngModel)]="registro.unidade_id">
+            <option *ngFor="let u of unidades" [ngValue]="u.id">{{u.nome}}</option>
+        </select>
+
+        <label for="telefone">Telefone</label>
+        <input type="text" name="telefone" id="telefone" required
+               [(ngModel)]="registro.telefone">
+
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" required
+               [(ngModel)]="registro.email">
+        
+    </div>
+
+    <input type="button" value="Cancelar" routerLink="/profissional-list">
+    <input type="submit" value="Salvar" [disabled]="form.invalid">
+    
+</form>

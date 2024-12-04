@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nomeCompleto": "Administrador",
+    "nomeUsuario": "admin",
+    "papel": "ADMIN",
+    "ativo": true
+  },
+  {
+    "id": 2,
+    "nomeCompleto": "Daniel",
+    "nomeUsuario": "daniel",
+    "papel": "ADMIN",
+    "ativo": true
+  },
+  {
+    "id": 4,
+    "nomeCompleto": "Limeira",
+    "nomeUsuario": "limeira",
+    "papel": "ADMIN",
+    "ativo": true
+  },
+  {
+    "id": 3,
+    "nomeCompleto": "Paulo",
+    "nomeUsuario": "paulo",
+    "papel": "ATENDENTE",
+    "ativo": true
+  }
+]
