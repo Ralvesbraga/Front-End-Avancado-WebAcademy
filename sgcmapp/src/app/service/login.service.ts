@@ -81,6 +81,7 @@ export class LoginService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
     sessionStorage.removeItem('expiracao');
+    document.cookie = 'XSRF-TOKEN=; Max-Age=0; path=/';
     clearInterval(this.intervaloRenovacaoToken);
     this.router.navigate(['/login']);
   }
@@ -109,6 +110,7 @@ export class LoginService {
     if (token) {
       this.temRequisicaoRecente = true;
       return requisicao.clone({
+        withCredentials:true,
         headers: requisicao.headers.set('Authorization', 'Bearer ' + token)
       });
     }

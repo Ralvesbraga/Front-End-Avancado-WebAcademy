@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Especialidade } from '../../../model/especialidade';
 import { Profissional } from '../../../model/profissional';
@@ -13,7 +13,7 @@ import { ICrudForm } from '../../i-crud-form';
 @Component({
   selector: 'app-profissional-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './profissional-form.component.html',
   styles: ``
 })
@@ -45,6 +45,7 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional> {
       this.servico.getById(+id).subscribe({
         next: (resposta: Profissional) => {
           this.registro = resposta;
+          this.formProfissional.patchValue(this.registro);
         }
       });
     }
@@ -54,8 +55,17 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional> {
   registro: Profissional = <Profissional>{};
   especialidades: Especialidade[] = [];
   unidades: Unidade[] = [];
+
+  formProfissional = new FormGroup({
+    nome: new FormControl<string | null>(null),
+    registroConselho: new FormControl<string | null>(null),
+    especialidade_id: new FormControl<number | null>(null),
+    unidade_id: new FormControl<number | null>(null),
+    email: new FormControl<string | null>(null)
+  });
   
   save(): void {
+    this.registro = Object.assign(this.registro, this.formProfissional.value);
     this.servico.save(this.registro).subscribe({
       complete: () => {
         alert('Operação realizada com sucesso!');

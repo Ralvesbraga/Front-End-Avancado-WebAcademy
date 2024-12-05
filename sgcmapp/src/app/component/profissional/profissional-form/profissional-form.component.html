@@ -4,31 +4,31 @@
 
         <label for="nome">Nome</label>
         <input type="text" name="nome" id="nome" required
-               [(ngModel)]="registro.nome">
+               formControlName="nome">
 
         <label for="registroConselho">Registro</label>
         <input type="text" name="registroConselho" id="registroConselho" required
-               [(ngModel)]="registro.registroConselho">
+               formControlName="registroConselho">
 
         <label for="especialidade">Especialidade</label>
         <select name="especialidade" id="especialidade" required
-                [(ngModel)]="registro.especialidade_id">
+                formControlName="especialidade_id">
             <option *ngFor="let e of especialidades" [ngValue]="e.id">{{e.nome}}</option>
         </select>
 
         <label for="unidade">Unidade</label>
         <select name="unidade" id="unidade" required
-                [(ngModel)]="registro.unidade_id">
+                formControlName="unidade_id">
             <option *ngFor="let u of unidades" [ngValue]="u.id">{{u.nome}}</option>
         </select>
 
         <label for="telefone">Telefone</label>
         <input type="text" name="telefone" id="telefone" required
-               [(ngModel)]="registro.telefone">
+               formControlName="telefone">
 
         <label for="email">E-mail</label>
         <input type="email" name="email" id="email" required
-               [(ngModel)]="registro.email">
+               formControlName="email">
         
     </div>
 
