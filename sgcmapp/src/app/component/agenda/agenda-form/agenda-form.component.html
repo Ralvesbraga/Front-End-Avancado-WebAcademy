@@ -1,28 +1,32 @@
-<form (submit)="save()" #form="ngForm">
+<form (submit)="save()" [formGroup]="formAgenda">
 
     <div class="grid">
 
         <label for="profissional">Profissional</label>
         <select name="profissional" id="profissional" required
-                [(ngModel)]="registro.profissional_id">
+                formControlName="profissional_id">
             <option *ngFor="let item of profissionais"
                     [ngValue]="item.id">{{item.nome}}</option>
         </select>
+        <small *ngIf="form.profissional_id.touched && form.profissional_id.hasError('required')">Campo obrigatório</small>
 
         <label for="paciente">Paciente</label>
         <select name="paciente" id="paciente" required
-                [(ngModel)]="registro.paciente_id">
+                formControlName="paciente_id">
             <option *ngFor="let item of pacientes"
                     [ngValue]="item.id">{{item.nome}}</option>
         </select>
+        <small *ngIf="form.paciente_id.touched && form.paciente_id.hasError('required')">Campo obrigatório</small>
 
         <label for="data">Data</label>
         <input type="date" name="data" id="data" required
-               [(ngModel)]="registro.data">
+               formControlName="data" min="{{hoje}}">
+        <small *ngIf="form.data.touched && form.data.hasError('required')">Campo obrigatório</small>
+        <small *ngIf="form.data.touched && form.data.hasError('diaUtil')">Não é um dia útil</small>
 
         <label for="hora">Hora</label>
         <select name="hora" id="hora" required
-                [(ngModel)]="registro.hora">
+                formControlName="hora">
             <option value="">Selecione</option>
             <option value="14:00:00">14:00</option>
             <option value="14:30:00">14:30</option>
@@ -38,10 +42,11 @@
             <option value="19:30:00">19:30</option>
             <option value="20:00:00">20:00</option>
         </select>
+        <small *ngIf="form.hora.touched && form.hora.hasError('required')">Campo obrigatório</small>
 
         <label for="convenio">Convênio</label>
         <select name="convenio" id="convenio"
-                [(ngModel)]="registro.convenio_id">
+                formControlName="convenio_id">
             <option [value]="null">Sem convênio</option>
             <option *ngFor="let item of convenios"
                     [ngValue]="item.id">{{item.nome}}</option>
@@ -50,6 +55,6 @@
     </div>
 
     <input type="button" value="Cancelar" routerLink="/agenda-list">
-    <input type="submit" value="Salvar" [disabled]="form.invalid">
+    <input type="submit" value="Salvar" [disabled]="formAgenda.invalid">
 
 </form>

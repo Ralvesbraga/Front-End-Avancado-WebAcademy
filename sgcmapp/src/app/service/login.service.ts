@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Usuario } from '../model/usuario';
 import { BehaviorSubject } from 'rxjs';
-import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +13,22 @@ export class LoginService {
   constructor(
       private http: HttpClient,
       private router: Router) {
+
     const dadosUsuario = sessionStorage.getItem('usuario') || '{}';
     const usuario = JSON.parse(dadosUsuario);
     this.usuarioAutenticado.next(usuario);
+
     if (this.estaLogado()) {
       this.agendarRenovacaoToken();
     }
+
   }
 
   usuarioAutenticado: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(<Usuario>{});
   private temRequisicaoRecente: boolean = false;
   private intervaloRenovacaoToken: any;
 
-  private agendarRenovacaoToken(): void{
+  private agendarRenovacaoToken(): void {
     const intervalo = 60000;
     this.intervaloRenovacaoToken = setInterval(() => {
       if (this.temRequisicaoRecente) {
@@ -36,13 +38,13 @@ export class LoginService {
     }, intervalo);
   }
 
-  private renovarToken(): void{
+  private renovarToken(): void {
     const url = environment.API_URL + '/renovar';
-    this.http.get(url,{responseType: 'text'}).subscribe({
-      next: (Token: string) => {
-        this.iniciarSessaoUsuario(Token);
+    this.http.get(url, { responseType: 'text' }).subscribe({
+      next: (token: string) => {
+        this.iniciarSessaoUsuario(token);
       }
-    })
+    });
   }
 
   private iniciarSessaoUsuario(token: string): void {
@@ -110,7 +112,7 @@ export class LoginService {
     if (token) {
       this.temRequisicaoRecente = true;
       return requisicao.clone({
-        withCredentials:true,
+        withCredentials: true,
         headers: requisicao.headers.set('Authorization', 'Bearer ' + token)
       });
     }

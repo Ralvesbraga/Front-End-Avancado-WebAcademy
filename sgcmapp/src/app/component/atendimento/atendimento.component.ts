@@ -43,4 +43,14 @@ export class AtendimentoComponent implements ICrudList<Atendimento> {
     throw new Error('Method not implemented.');
   }
 
+  updateStatus(id: number): void {
+    if (confirm('Confirma alteração no status do agendamento?')) {
+      this.servico.updateStatus(id).subscribe({
+        complete: () => {
+          this.get();
+        }
+      })
+    }
+  }
+
 }

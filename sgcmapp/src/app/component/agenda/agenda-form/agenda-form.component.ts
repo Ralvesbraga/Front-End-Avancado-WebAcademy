@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Atendimento } from '../../../model/atendimento';
 import { Convenio } from '../../../model/convenio';
@@ -11,11 +11,12 @@ import { ConvenioService } from '../../../service/convenio.service';
 import { PacienteService } from '../../../service/paciente.service';
 import { ProfissionalService } from '../../../service/profissional.service';
 import { ICrudForm } from '../../i-crud-form';
+import { diaUtilValidator } from '../../../validator/dia-util.validator';
 
 @Component({
   selector: 'app-agenda-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './agenda-form.component.html',
   styles: ``
 })
@@ -55,6 +56,7 @@ export class AgendaFormComponent implements ICrudForm<Atendimento> {
       this.servico.getById(+id).subscribe({
         next: (resposta: Atendimento) => {
           this.registro = resposta;
+          this.formAgenda.patchValue(this.registro);
         }
       });
     }
@@ -65,8 +67,22 @@ export class AgendaFormComponent implements ICrudForm<Atendimento> {
   convenios: Convenio[] = [];
   pacientes: Paciente[] = [];
   profissionais: Profissional[] = [];
+  hoje: string = (new Date()).toISOString().split('T')[0];
+
+  formAgenda = new FormGroup({
+    data: new FormControl<string | null>(null, diaUtilValidator()),
+    hora: new FormControl<string | null>(null),
+    profissional_id: new FormControl<number | null>(null),
+    paciente_id: new FormControl<number | null>(null),
+    convenio_id: new FormControl<number | null>(null),
+  });
+
+  get form() {
+    return this.formAgenda.controls;
+  }
 
   save(): void {
+    this.registro = Object.assign(this.registro, this.formAgenda.value);
     this.servico.save(this.registro).subscribe({
       complete: () => {
         alert('Operação realizada com sucesso!');

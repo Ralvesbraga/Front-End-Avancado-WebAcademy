@@ -28,14 +28,14 @@ export const routes: Routes = [
         { path: 'profissional-form', component: ProfissionalFormComponent },
         { path: 'convenio-list', component: ConvenioListComponent},
         { path: 'convenio-form', component: ConvenioFormComponent},
-        { path: 'config', canActivate:[autenticacaoGuard], data:{ papel: 'ROLE_ADMIN'}, children: [
+        { path: 'config', canActivate: [autenticacaoGuard], data: { papel: 'ROLE_ADMIN' }, children: [
             { path: 'unidade-list', component: UnidadeListComponent },
             { path: 'unidade-form', component: UnidadeFormComponent },
             { path: 'especialidade-list', component: EspecialidadeListComponent },
             { path: 'especialidade-form', component: EspecialidadeFormComponent },
             { path: 'usuario-list', component: UsuarioListComponent },
             { path: 'usuario-form', component: UsuarioFormComponent }
-        ] }    
+        ] }
     ]},
     { path: 'login', component: LoginComponent }
 ];

@@ -20,10 +20,10 @@
             <td>{{ item.unidade_nome }}</td>
             <td>{{ item.convenio_nome ? item.convenio_nome : 'Sem convênio' }}</td>
             <td>
-                <a href="javascript:void(0)"
+                <a (click)="updateStatus(item.id)"
                    class="botao iniciar"
                    [ngClass]="{ 'inativo': item.status == 'ATENDIMENTO'}">Iniciar</a>
-                <a href="javascript:void(0)"
+                <a (click)="updateStatus(item.id)"
                    class="botao finalizar excluir"
                    [ngClass]="{ 'inativo': item.status == 'CHEGADA'}">Finalizar</a>
             </td>

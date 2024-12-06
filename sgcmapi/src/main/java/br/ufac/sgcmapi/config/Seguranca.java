@@ -86,9 +86,9 @@ public class Seguranca {
         gerenciadorCsrf.setCsrfRequestAttributeName(null);
         http.csrf(
             csrf -> csrf
-                    .ignoringRequestMatchers("/autenticacao")
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                    .csrfTokenRequestHandler(gerenciadorCsrf::handle)
+                .ignoringRequestMatchers("/autenticacao")
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRequestHandler(gerenciadorCsrf::handle)
         );
 
         http.authorizeHttpRequests(

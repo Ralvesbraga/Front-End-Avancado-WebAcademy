@@ -183,12 +183,6 @@ form {
         input,
         select {
             width: 18em;
-            ~small{
-                color: red;
-                grid-column: 2;
-                margin: 0.5em 0.5em 0;
-                text-align: left;
-            }
         }
         input {
             &[type="checkbox"] {
@@ -197,6 +191,14 @@ form {
             }
             &[type="date"] {
                 font-family: inherit;
+            }
+        }
+        input, select {
+            ~small {
+                color: red;
+                grid-column: 2;
+                margin: -0.5em 0.5em 0;
+                text-align: left;
             }
         }
     }
