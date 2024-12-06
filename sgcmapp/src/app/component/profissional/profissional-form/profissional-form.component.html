@@ -1,10 +1,11 @@
-<form (submit)="save()" #form="ngForm">
+<form (submit)="save()" [formGroup]="formProfissional">
     
     <div class="grid">
 
         <label for="nome">Nome</label>
         <input type="text" name="nome" id="nome" required
                formControlName="nome">
+        <small>Campo obrigatório</small>
 
         <label for="registroConselho">Registro</label>
         <input type="text" name="registroConselho" id="registroConselho" required
@@ -15,24 +16,29 @@
                 formControlName="especialidade_id">
             <option *ngFor="let e of especialidades" [ngValue]="e.id">{{e.nome}}</option>
         </select>
+        <small *ngIf="form.especialidade_id.touched&&form.especialidade_id.hasError('required')">Campo obrigatório</small>
 
         <label for="unidade">Unidade</label>
         <select name="unidade" id="unidade" required
                 formControlName="unidade_id">
             <option *ngFor="let u of unidades" [ngValue]="u.id">{{u.nome}}</option>
         </select>
+        <small *ngIf="form.unidade_id.touched&&form.unidade_id.hasError('required')">Campo obrigatório</small>
 
         <label for="telefone">Telefone</label>
         <input type="text" name="telefone" id="telefone" required
                formControlName="telefone">
+        <small *ngIf="form.telefone.touched&&form.telefone.hasError('required')">Campo obrigatório</small>
+        <small *ngIf="form.telefone.touched&&form.telefone.hasError('telefone')">Formato inválido</small>
 
         <label for="email">E-mail</label>
         <input type="email" name="email" id="email" required
                formControlName="email">
-        
+        <small *ngIf="form.email.touched&&form.email.hasError('email')">Formato inválido</small>
+        <small *ngIf="form.email.touched&&form.email.hasError('email')">Campo obrigatório</small>
     </div>
 
     <input type="button" value="Cancelar" routerLink="/profissional-list">
-    <input type="submit" value="Salvar" [disabled]="form.invalid">
+    <input type="submit" value="Salvar" [disabled]="formProfissional.invalid">
     
 </form>

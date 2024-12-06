@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Especialidade } from '../../../model/especialidade';
 import { Profissional } from '../../../model/profissional';
@@ -61,8 +61,13 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional> {
     registroConselho: new FormControl<string | null>(null),
     especialidade_id: new FormControl<number | null>(null),
     unidade_id: new FormControl<number | null>(null),
-    email: new FormControl<string | null>(null)
+    email: new FormControl<string | null>(null, Validators.email),
+    telefone: new FormControl<string | null>(null, Validators.pattern("^\\(d{2}\\) \\(d{4,5}-\\\\d{4})"))
   });
+
+  get form(){
+    return this.formProfissional.controls;
+  }
   
   save(): void {
     this.registro = Object.assign(this.registro, this.formProfissional.value);
